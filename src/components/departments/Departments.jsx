@@ -4,7 +4,7 @@ import Courses from "../courses/Courses";
 
 import "./Departments.css";
 
-const URL = 'https://db.onrender.com/departments/';
+const URL = 'https://db-spae.onrender.com/departments';
 
 export function Departments({ title, pathname }) { // Add pathname as a prop
   // type State = 'empty' | 'data' | 'error' | 'loading' GOLDEN RULE Læra
