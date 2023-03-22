@@ -4,7 +4,7 @@ import Courses from "../courses/Courses";
 
 import "./Departments.css";
 
-const URL = 'http://localhost:4000/departments/';
+const URL = 'https://db.onrender.com/departments/';
 
 export function Departments({ title, pathname }) { // Add pathname as a prop
   // type State = 'empty' | 'data' | 'error' | 'loading' GOLDEN RULE Læra
