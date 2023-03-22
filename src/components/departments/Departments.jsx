@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import Courses from "../courses/Courses";
 
 import "./Departments.css";
 
 const URL = 'http://localhost:4000/departments/';
 
-export function Departments({ title }) {
+export function Departments({ title, pathname }) { // Add pathname as a prop
   // type State = 'empty' | 'data' | 'error' | 'loading' GOLDEN RULE Læra
   const [state, setState] = useState("empty");
   const [departments, setDepartments] = useState([{}]);
-
-  useEffect(() => {
-    async function fetchData() {
-      await fetchDepartment();
-    }
-    fetchData();
-  }, []);
 
   async function fetchDepartment() {
     setState("loading");
 
     try {
       const response = await fetch(URL);
-      console.log(URL)
       if (!response.ok) {
         throw new Error("not ok");
       }
@@ -34,6 +27,13 @@ export function Departments({ title }) {
       console.log(e);
     }
   }
+
+  useEffect(() => {
+    fetchDepartment();
+  }, []);
+
+  const location = useLocation();
+  const slug = location.state?.slug;
 
   return (
     <section>
@@ -47,19 +47,20 @@ export function Departments({ title }) {
             return (
               <div key={i}>
                 <li>
-                  <Link
-                    to={{
-                      pathname: `/${department.slug}/courses`,
-                      departSlgu: { department: department.slug },
-                    }}
-                  >
-                    {department.title}
-                  </Link>
+                <Link
+                  to={{
+                    pathname: `/departments/${department.slug}/courses/`,
+                    state: { slug },
+                  }}
+                >
+                  {department.title}
+                </Link>
                 </li>
               </div>
             );
           })}
       </ul>
+      {state === "data" && <Courses title="Námskeið" slug={slug} />}
     </section>
   );
 }

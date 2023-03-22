@@ -1,76 +1,79 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import './Courses.css';
+import "./Courses.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ title }) {
-    const [state, setState] = useState('empty');
-    const [courses, setCourses] = useState([]);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const [activePage, setActivePage] = useState(1);
+export function Courses({ title, slug }) {
+  const [state, setState] = useState("empty");
+  const [courses, setCourses] = useState([]);
 
-    useEffect(() => {
-        async function fetchData() {
-            setState('loading');
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [activePage, setActivePage] = useState(1);
 
-            try {
-                const response = await fetch(`http://localhost:4000/departments/hagfraedideild/courses`);
+  useEffect(() => {
+    async function fetchData() {
+      setState("loading");
 
-                if (!response.ok) {
-                    throw new Error('not ok');
-                }
+      try {
+        const response = await fetch(
+          `${URL}${slug}/courses`
+        );
 
-                const json = await response.json();
-                const numCourses = json.length;
-                setTotalPages(Math.ceil(numCourses / PAGE_SIZE));
-                setCourses(json.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
-                setState('data');
-            } catch (e) {
-                setState('error');
-                console.log(e);
-            }
+        if (!response.ok) {
+          throw new Error("not ok");
         }
 
-        fetchData();
-    }, [page]);
+        const json = await response.json()
 
-    function handlePageChange(newPage) {
-      setPage(newPage);
-      setActivePage(newPage);
+        const numCourses = json.length;
+        setTotalPages(Math.ceil(numCourses / PAGE_SIZE));
+        setCourses(json.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
+        setState('data');
+      } catch (e) {
+        setState('error');
+        console.log(e);
+      }
     }
-    
 
-    return (
-        <section>
-            <h2>{title}</h2>
-            {state === 'empty' && (<p>veldu deild hér að ofan</p>)}
-            {state === 'error' && (<p>Error loading courses.</p>)}
-            {state === 'loading' && (<p>Loading...</p>)}
-            {state === 'data' && (
-                <>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Númer</th>
-                                <th>Heiti</th>
-                                <th>Einingar</th>
-                                <th>Kennslumisseri</th>
-                                <th>Námsstig</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {courses.map(course => (
-                                <tr key={course.id}>
-                                    <td>{course.courseId}</td>
-                                    <td><a href={course.url}>{course.title}</a></td>
-                                    <td>{course.units}</td>
-                                    <td>{course.semester}</td>
-                                    <td>{course.level}</td>
-                                </tr>
-                            ))}
-                        </tbody>
+    fetchData();
+  }, [page, slug]);
+
+  function handlePageChange(newPage) {
+    setPage(newPage);
+    setActivePage(newPage);
+  }
+
+  return (
+    <section>
+      <h2>{title}</h2>
+      {state === 'empty' && (<p>veldu deild hér að ofan</p>)}
+      {state === 'error' && (<p>Error loading courses.</p>)}
+      {state === 'loading' && (<p>Loading...</p>)}
+      {state === 'data' && (
+        <>
+          <table>
+            <thead>
+              <tr>
+                <th>Númer</th>
+                <th>Heiti</th>
+                <th>Einingar</th>
+                <th>Kennslumisseri</th>
+                <th>Námsstig</th>
+              </tr>
+            </thead>
+            <tbody>
+              {courses.map((course, index) => (
+                <tr key={index}>
+                  <td>{course.courseId}</td>
+                  <td><a href={course.url}>{course.title}</a></td>
+                  <td>{course.units}</td>
+                  <td>{course.semester}</td>
+                  <td>{course.level}</td>
+                </tr>
+              ))}
+            </tbody>
                     </table>
                     <div className="pagination">
                         <button
