@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import "./Courses.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ title, slug }) {
+export function Courses({ titles }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
@@ -12,34 +13,35 @@ export function Courses({ title, slug }) {
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
 
+  const { slug } = useParams();
+   
   useEffect(() => {
     async function fetchData() {
       setState("loading");
 
       try {
         const response = await fetch(
-          `${URL}${slug}/courses`
+          `https://db-spae.onrender.com/departments/${slug}/courses`
         );
 
         if (!response.ok) {
           throw new Error("not ok");
         }
 
-        const json = await response.json()
+        const json = await response.json();
 
         const numCourses = json.length;
         setTotalPages(Math.ceil(numCourses / PAGE_SIZE));
         setCourses(json.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
-        setState('data');
+        setState("data");
       } catch (e) {
-        setState('error');
+        setState("error");
         console.log(e);
       }
     }
 
     fetchData();
   }, [page, slug]);
-
   function handlePageChange(newPage) {
     setPage(newPage);
     setActivePage(newPage);
@@ -47,11 +49,13 @@ export function Courses({ title, slug }) {
 
   return (
     <section>
-      <h2>{title}</h2>
-      {state === 'empty' && (<p>veldu deild hér að ofan</p>)}
-      {state === 'error' && (<p>Error loading courses.</p>)}
-      {state === 'loading' && (<p>Loading...</p>)}
-      {state === 'data' && (
+      <h2>`${}til`</h2>
+      <h3>{titles}</h3>
+      <h3>{}de</h3>
+      {state === "empty" && <p>veldu deild hér að ofan</p>}
+      {state === "error" && <p>Villa við að sækja námskeið.</p>}
+      {state === "loading" && <p>Loading...</p>}
+      {state === "data" && (
         <>
           <table>
             <thead>
@@ -67,46 +71,58 @@ export function Courses({ title, slug }) {
               {courses.map((course, index) => (
                 <tr key={index}>
                   <td>{course.courseId}</td>
-                  <td><a href={course.url}>{course.title}</a></td>
+                  <td>
+                    <a href={course.url}>{course.title}</a>
+                  </td>
                   <td>{course.units}</td>
                   <td>{course.semester}</td>
                   <td>{course.level}</td>
                 </tr>
               ))}
             </tbody>
-                    </table>
-                    <div className="pagination">
-                        <button
-                            className="page-link"
-                            onClick={() => handlePageChange(page - 1)}
-                            disabled={page === 1}
-                        >
-                            Previous
-                        </button>
-                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(p => (
-                            <button
-                                key={p}
-                                className={`page-link${p === activePage ? ' active' : ''}`}
-                                onClick={() => {
-                                  handlePageChange(p);
-                                  setActivePage(p);
-                                }}
-                            >
-                                {p}
-                            </button>
-                        ))}
-                        <button
-                            className="page-link"
-                            onClick={() => handlePageChange(page + 1)}
-                            disabled={page === totalPages}
-                        >
-                            Next
-                        </button>
-                    </div>
-                </>
-            )}
-        </section>
-    );
+          </table>
+          <div className="pagination">
+  <button
+    className="page-link"
+    onClick={() => handlePageChange(page - 1)}
+    disabled={page === 1}
+  >
+    Previous
+  </button>
+  {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+    const maxPage = activePage + 3;
+    const minPage = activePage - 3;
+    if (p === 1 || p === totalPages || (p >= minPage && p <= maxPage)) {
+      return (
+        <button
+          key={p}
+          className={`page-link${p === activePage ? " active" : ""}`}
+          onClick={() => {
+            handlePageChange(p);
+            setActivePage(p);
+          }}
+        >
+          {p}
+        </button>
+      );
+    } else if (p === minPage - 1 || p === maxPage + 1) {
+      return <span key={p}>...</span>;
+    }
+    return null;
+  })}
+  <button
+    className="page-link"
+    onClick={() => handlePageChange(page + 1)}
+    disabled={page === totalPages}
+  >
+    Next
+  </button>
+</div>
+
+        </>
+      )}
+    </section>
+  );
 }
 
 export default Courses;

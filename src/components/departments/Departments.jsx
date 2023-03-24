@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import Courses from "../courses/Courses";
+import { Link } from "react-router-dom";
 
 import "./Departments.css";
 
-const URL = 'https://db-spae.onrender.com/departments';
+export const URL = 'https://db-spae.onrender.com/departments';
+//export const URL = 'http://localhost:4000/departments';
 
-export function Departments({ title, pathname }) { // Add pathname as a prop
+export function Departments({ titles, props }) { // Add pathname as a prop
   // type State = 'empty' | 'data' | 'error' | 'loading' GOLDEN RULE Læra
   const [state, setState] = useState("empty");
   const [departments, setDepartments] = useState([{}]);
@@ -32,12 +32,9 @@ export function Departments({ title, pathname }) { // Add pathname as a prop
     fetchDepartment();
   }, []);
 
-  const location = useLocation();
-  const slug = location.state?.slug;
-
   return (
     <section>
-      <h2>{title}</h2>
+      <h2>{titles}</h2>
       {state === "empty" && <p>engar deildir</p>}
       {state === "error" && <p>villa við að sækja deildir</p>}
       {state === "loading" && <p>Loading...</p>}
@@ -49,18 +46,17 @@ export function Departments({ title, pathname }) { // Add pathname as a prop
                 <li>
                 <Link
                   to={{
-                    pathname: `/departments/${department.slug}/courses/`,
-                    state: { slug },
+                    pathname: `/departments/${department.slug}/courses`,
+                    titles:{titles},
                   }}
                 >
                   {department.title}
                 </Link>
-                </li>
+                </li>                
               </div>
             );
           })}
       </ul>
-      {state === "data" && <Courses title="Námskeið" slug={slug} />}
     </section>
   );
 }
