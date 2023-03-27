@@ -1,20 +1,26 @@
+import React from "react";
+import { DepartmentsProvider } from './components/departments/DepartmentsContext';
 import { Route, Routes } from "react-router-dom";
-import { Departments } from './components/departments/Departments.jsx';
 import { Courses } from './components/courses/Courses';
-import { Layout } from "./components/layout/Layout.jsx";
+import { Layout } from './components/layout/Layout'
+
 
 import './App.css';
 
-function App() {
+function App(department) {
+
   return (
     <>
-    <Layout title='Kennsluskrá' />
-    <Routes>
-      <Route path="/" element={<Departments titles='Deildir' />} />
-      <Route path="/departments/:slug/courses" element={<Courses titles='Námskeið' />} />
-    </Routes>
-    </>
+      <DepartmentsProvider>
+        <Routes>
+          <Route  path="/" element={<Layout titleName='Kennsluskrá' />}  />
+          <Route  path="/:slug/" element={<Courses titleName='Námskeið' title={department.title} description={department.description} />}  />
+        </Routes>
+      </DepartmentsProvider>  
+
+    </>  
   );
+  
 }
 
 export default App;

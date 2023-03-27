@@ -5,15 +5,15 @@ import "./Courses.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ titles }) {
+export function Courses({ titleName }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [activePage, setActivePage] = useState(1);
+  const [activePage, setActivePage] = useState(1);  
 
-  const { slug } = useParams();
+  const { slug, title, description } = useParams();
    
   useEffect(() => {
     async function fetchData() {
@@ -21,15 +21,15 @@ export function Courses({ titles }) {
 
       try {
         const response = await fetch(
-          `https://db-spae.onrender.com/departments/${slug}/courses`
-        );
+          //`https://db-spae.onrender.com/departments/${slug}/courses`
+          `http://localhost:4000/departments/${slug}/courses/`
+          );
 
         if (!response.ok) {
           throw new Error("not ok");
         }
 
         const json = await response.json();
-
         const numCourses = json.length;
         setTotalPages(Math.ceil(numCourses / PAGE_SIZE));
         setCourses(json.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE));
@@ -41,7 +41,9 @@ export function Courses({ titles }) {
     }
 
     fetchData();
-  }, [page, slug]);
+  }, [ page, slug, title, description ]);
+  
+  console.log({page}, {slug}, {title}, {description})
   function handlePageChange(newPage) {
     setPage(newPage);
     setActivePage(newPage);
@@ -49,9 +51,13 @@ export function Courses({ titles }) {
 
   return (
     <section>
-      <h2>`${}til`</h2>
-      <h3>{titles}</h3>
-      <h3>{}de</h3>
+      <h2>{title}</h2>
+      <p>{description}</p>
+      <h3>{titleName}</h3>
+      <h2>{slug}</h2>
+      {console.log('title: ', title)}
+      {console.log('description: ', description)}
+      {console.log('slug: ', slug)}
       {state === "empty" && <p>veldu deild hér að ofan</p>}
       {state === "error" && <p>Villa við að sækja námskeið.</p>}
       {state === "loading" && <p>Loading...</p>}
