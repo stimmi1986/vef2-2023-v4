@@ -1,24 +1,35 @@
 import React from "react";
-import { DepartmentsProvider } from './components/departments/DepartmentsContext';
 import { Route, Routes } from "react-router-dom";
+import { Departments } from "./components/departments/Departments"
 import { Courses } from './components/courses/Courses';
-import { Layout } from './components/layout/Layout'
+import { NotFound } from "./pages/NotFound";
+import { Department } from "./pages/Depertment"
+import { DepartmentForm } from "./components/departments/DepartmentForm";
 
 
 import './App.css';
 
-function App(department) {
+function App({titleName, department}) {
 
   return (
     <>
-      <DepartmentsProvider>
+      <>
+        <section>
+          <h2>
+            {titleName}
+          </h2>
+        </section>
+      </>
+      <>
         <Routes>
-          <Route  path="/" element={<Layout titleName='Kennsluskrá' />}  />
-          <Route  path="/:slug/" element={<Courses titleName='Námskeið' title={department.title} description={department.description} />}  />
+          <Route exact path="/" element={<Departments titleName='Deildir' />}  />
+          <Route exact path="/" element={<DepartmentForm />}  />
+          <Route exact path="/Stimmi" element={<Department titleName='Deildir' />}  />
+          <Route exact path="/:slug/" component={department} element={<Courses titleName='Námskeið' />}  />
+          <Route exact path="/*" element={<NotFound titleName='Síða fannst ekki :( ' />}  />
         </Routes>
-      </DepartmentsProvider>  
-
-    </>  
+      </>
+    </>
   );
   
 }

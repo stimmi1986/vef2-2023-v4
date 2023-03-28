@@ -1,15 +1,15 @@
 import React from "react";
+import { Courses } from "../courses/Courses";
 import { Departments } from "../departments/Departments";
 
-export function Layout({ titleName }) {
+export function Layout(department) {
+
   return (
     <>
-      <section>
-          <h2>{titleName}</h2>
-          <Departments titleName='Deildir' />
-      </section>
+      <Departments titleName='Deildir' />
+      <Courses titleName='Námskeið' title={department.title} description={department.description} />
     </>
   )
-}
+};
 
 export default Layout;

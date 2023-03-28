@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { URL } from "../departments/Departments"
 
 import "./Courses.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ titleName }) {
+export function Courses({ titleName, department }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [activePage, setActivePage] = useState(1);  
+  const [activePage, setActivePage] = useState(1);
+  const location = useLocation();
+  const { title, description } = location.state;  
 
-  const { slug, title, description } = useParams();
+  const { slug } = useParams();
    
   useEffect(() => {
     async function fetchData() {
@@ -21,8 +24,7 @@ export function Courses({ titleName }) {
 
       try {
         const response = await fetch(
-          //`https://db-spae.onrender.com/departments/${slug}/courses`
-          `http://localhost:4000/departments/${slug}/courses/`
+          `${URL}${slug}/courses/`
           );
 
         if (!response.ok) {
@@ -41,9 +43,9 @@ export function Courses({ titleName }) {
     }
 
     fetchData();
-  }, [ page, slug, title, description ]);
+  }, [ page, slug ]);
   
-  console.log({page}, {slug}, {title}, {description})
+
   function handlePageChange(newPage) {
     setPage(newPage);
     setActivePage(newPage);
@@ -55,9 +57,6 @@ export function Courses({ titleName }) {
       <p>{description}</p>
       <h3>{titleName}</h3>
       <h2>{slug}</h2>
-      {console.log('title: ', title)}
-      {console.log('description: ', description)}
-      {console.log('slug: ', slug)}
       {state === "empty" && <p>veldu deild hér að ofan</p>}
       {state === "error" && <p>Villa við að sækja námskeið.</p>}
       {state === "loading" && <p>Loading...</p>}
