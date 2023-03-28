@@ -33,7 +33,7 @@ export function Departments({ titleName }) {
     }
   }
   fetchData();
-  }, []);//setDepartments
+  }, [setDepartments]);//
  
   return (
     <section>
@@ -49,7 +49,7 @@ export function Departments({ titleName }) {
                 <li>
                 <Link
                   to={{
-                    pathname: `${department.slug}/`,
+                    pathname: `/departments/${department.slug}/`,
                   }}
                 >
                   {department.title}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { UpdateNameForm } from "../components/Form/UpdateNameForm";
+import { UpdateDescriptionForm } from "../components/Form/UpdateDescriptionForm";
 import { URL } from "../components/departments/Departments";
-import Courses from "../components/courses/Courses";
 
 export function Department() {
   const { slug } = useParams();
@@ -11,7 +12,7 @@ export function Department() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(URL);
+        const response = await fetch(`${URL}${slug}`);
 
         if (!response.ok) {
           throw new Error("not ok");
@@ -39,9 +40,12 @@ export function Department() {
 
   return (
     <>
-      <h2>{department.title}</h2>
-      <p>{department.description}</p>
-      <Courses titleName="Námskeið" props={department} />
+      <section>
+        <h2>{department.title}</h2>
+        <UpdateNameForm />
+        <p>{department.description}</p>
+        <UpdateDescriptionForm />
+      </section>
     </>
   );
 }

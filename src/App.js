@@ -1,10 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Departments } from "./components/departments/Departments"
-import { Courses } from './components/courses/Courses';
+import { Courses } from './pages/Courses';
 import { NotFound } from "./pages/NotFound";
 import { Department } from "./pages/Depertment"
-import { DepartmentForm } from "./components/departments/DepartmentForm";
 
 
 import './App.css';
@@ -23,9 +22,10 @@ function App({titleName, department}) {
       <>
         <Routes>
           <Route exact path="/" element={<Departments titleName='Deildir' />}  />
-          <Route exact path="/" element={<DepartmentForm />}  />
-          <Route exact path="/Stimmi" element={<Department titleName='Deildir' />}  />
-          <Route exact path="/:slug/" component={department} element={<Courses titleName='Námskeið' />}  />
+
+          <Route exact path="/departments/:slug" element={<Department titleName='Deild' />}  />
+          <Route exact path="/departments/:slug/courses" component={department} element={<Courses titleName='Áfangar' />}  />
+
           <Route exact path="/*" element={<NotFound titleName='Síða fannst ekki :( ' />}  />
         </Routes>
       </>

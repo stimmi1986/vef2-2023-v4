@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { URL } from "../departments/Departments"
+import { useParams } from "react-router-dom";
+import { URL } from "../components/departments/Departments"
 
 import "./Courses.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ titleName, department }) {
+export function Courses({ titleName }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [activePage, setActivePage] = useState(1);
-  const location = useLocation();
-  const { title, description } = location.state;  
 
   const { slug } = useParams();
    
@@ -53,8 +51,6 @@ export function Courses({ titleName, department }) {
 
   return (
     <section>
-      <h2>{title}</h2>
-      <p>{description}</p>
       <h3>{titleName}</h3>
       <h2>{slug}</h2>
       {state === "empty" && <p>veldu deild hér að ofan</p>}

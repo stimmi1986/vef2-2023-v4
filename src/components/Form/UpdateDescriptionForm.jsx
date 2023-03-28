@@ -1,19 +1,21 @@
 import { useState } from "react";
-import { URL } from "./Departments";
+import { useParams } from "react-router";
+import { URL } from "../departments/Departments";
 
-export function DepartmentForm() {
+export function UpdateDescriptionForm() {
+    const { slug } = useParams;
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
-    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
 
-    async function createDepartment(name, ) {
+    async function updatedescription(description, ) {
         setState('loading')
         try {
             const body = {
-                title: name
+                description: description
             }
-            const response = await fetch(URL, {
-                method: 'POST',
+            const response = await fetch(`${URL}${slug}`}, {
+                method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json"
                 },
@@ -36,25 +38,25 @@ export function DepartmentForm() {
     const onSubmitHandler = (e) => {
         e.preventDefault();
 
-        createDepartment(name);
+        updatedescription(description);
     }
 
     const onInputChange = (e) => {
-        setName(e.target.value);
+        setDescription(e.target.value);
     }
 
     return (
         <>
-            <h1>Ný deild</h1>
+            <h1>Lýsing á deild</h1>
             <form onSubmit={onSubmitHandler}>
                 <div>
-                    <label for="name">Nafn</label>
-                    <input id="name" type="text" value={name} onChange={onInputChange}/>
+                    <label for="description">Lýsing</label>
+                    <input id="description" type="text" value={description} onChange={onInputChange}/>
                 </div>
-                <button>Búa til nýja deild</button>
+                <button>Uppfærða lýsingu á deild?</button>
             </form>
-            {state === "empty" && <p>engar deildir</p>}
-            {state === "error" && <><p>villa við að búa til deild</p>
+            {state === "empty" && <p>Viltu uppfæra lýsingu á Deild?</p>}
+            {state === "error" && <><p>villa við að uppfæra lýsingu á deild</p>
             <p>Villur:</p>
             <ul>
                 {errors.map((error, i) => {
@@ -65,7 +67,9 @@ export function DepartmentForm() {
             </ul>
             </>}
             {state === "loading" && <p>Loading...</p>}
-            {state === "Success" && <p>Bjó til deild</p>}
+            {state === "Success" && <p>Uppfærði nlýsingu á deild</p>}
         </>
     )
 }
+
+export default UpdateDescriptionForm;
