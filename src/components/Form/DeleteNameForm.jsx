@@ -2,26 +2,19 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { URL } from "../../pages/Departments";
 
-export function UpdateNameForm() {
+export function DeleteNameForm() {
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
-    const [name, setName] = useState('');
+    const [deleteName, setDeleteName] = useState('');
 
     const {slug} = useParams();
 
-    async function updateName(name, ) {
+    async function deleteNameDep(deleteName, ) {
         setState('loading')
         try {
-            const body = {
-                title: name
-            }
             const response = await fetch(`${URL}${slug}`, {
-                method: 'PATCH',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(body),
-            });
+                method: 'DELETE',
+                });
             if (!response.ok) {
                 if (response.status >= 400 && response.status < 500) {
                     const responseJson = await response.json();
@@ -36,28 +29,27 @@ export function UpdateNameForm() {
         }
     }
 
-    const onSubmitHandler = (e) => {
+    const onClickHandler = (e) => {
         e.preventDefault();
 
-        updateName(name);
+        deleteNameDep(deleteName);
     }
 
-    const onInputChange = (e) => {
-        setName(e.target.value);
+    const onClickChange = (e) => {
+        setDeleteName(e.target.value);
     }
 
     return (
         <>
-            <h1>Nýtt Heiti</h1>
-            <form onSubmit={onSubmitHandler}>
+            <h1>Eyða Deild?</h1>
+            <form onClick={onClickHandler}>
                 <div>
-                    <label htmlFor="name">Heiti </label>
-                    <input id="name" type="text" value={name} onChange={onInputChange}/>
+                    <label htmlFor="deleteName">Eyða Deild </label>
+                    <button id="deleteName" type="text" value={deleteName} onClick={onClickChange}>Eyða</button>                    
                 </div>
-                <button>Uppfærða nafn á deild?</button>
             </form>
-            {state === "empty" && <p>Viltu uppfæra nafnið á Deild?</p>}
-            {state === "error" && <><p>villa við að uppfæra nafn á deild</p>
+            {state === "empty" && <p>Viltu eyða Deild?</p>}
+            {state === "error" && <><p>villa við að eyða deild</p>
             <p>Villur:</p>
             <ul>
                 {errors.map((error, i) => {
@@ -68,9 +60,9 @@ export function UpdateNameForm() {
             </ul>
             </>}
             {state === "loading" && <p>Loading...</p>}
-            {state === "Success" && <p>Uppfærði nafn á deild</p>}
+            {state === "Success" && <p>Búið að eyða deild</p>}
         </>
     )
 }
 
-export default UpdateNameForm;
+export default DeleteNameForm;

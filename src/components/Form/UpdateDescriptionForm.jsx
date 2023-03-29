@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useParams } from "react-router";
-import { URL } from "../departments/Departments";
+import { URL } from "../../pages/Departments";
 
 export function UpdateDescriptionForm() {
-    const { slug } = useParams;
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
     const [description, setDescription] = useState('');
+    
+    const {slug} = useParams();
 
     async function updatedescription(description, ) {
         setState('loading')
@@ -14,7 +15,7 @@ export function UpdateDescriptionForm() {
             const body = {
                 description: description
             }
-            const response = await fetch(`${URL}${slug}`}, {
+            const response = await fetch(`${URL}${slug}`, {
                 method: 'PATCH',
                 headers: {
                     "Content-Type": "application/json"
@@ -50,7 +51,7 @@ export function UpdateDescriptionForm() {
             <h1>Lýsing á deild</h1>
             <form onSubmit={onSubmitHandler}>
                 <div>
-                    <label for="description">Lýsing</label>
+                    <label htmlFor="description">Lýsing</label>
                     <input id="description" type="text" value={description} onChange={onInputChange}/>
                 </div>
                 <button>Uppfærða lýsingu á deild?</button>

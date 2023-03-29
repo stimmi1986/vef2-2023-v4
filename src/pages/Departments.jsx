@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { DepartmentForm } from "../components/Form/DepartmentForm";
 
 import "./Departments.css";
 
@@ -32,10 +33,8 @@ export function Departments({ titleName }) {
     }
   }
   fetchData();
-  }, []);
-  
-console.log('departments: >>', setDepartments)
-
+  }, [setDepartments]);//
+ 
   return (
     <section>
       <h2>{titleName}</h2>
@@ -50,22 +49,19 @@ console.log('departments: >>', setDepartments)
                 <li>
                 <Link
                   to={{
-                    pathname: `/${department.slug}/`,
+                    pathname: `/departments/${department.slug}/`,
                   }}
                 >
                   {department.title}
                 </Link>
-                  <br/>
-                  <p>
-                  {department.description}
-                  </p>
                 </li>                
               </div>
             );
           })}
       </ul>
+      <DepartmentForm />
     </section>
   );
-}
+};
 
 export default Departments;

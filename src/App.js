@@ -1,9 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Departments } from "./components/departments/Departments"
-import { Courses } from './pages/Courses';
 import { NotFound } from "./pages/NotFound";
+import { Departments } from "./pages/Departments"
 import { Department } from "./pages/Depertment"
+import { Courses } from './pages/Courses';
 
 
 import './App.css';

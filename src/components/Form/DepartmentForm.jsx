@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { URL } from "./Departments";
+import { URL } from "../../pages/Departments";
 
 export function DepartmentForm() {
     const [state, setState] = useState('empty');
@@ -48,7 +48,7 @@ export function DepartmentForm() {
             <h1>Ný deild</h1>
             <form onSubmit={onSubmitHandler}>
                 <div>
-                    <label for="name">Nafn</label>
+                    <label htmlFor="name">Nafn</label>
                     <input id="name" type="text" value={name} onChange={onInputChange}/>
                 </div>
                 <button>Búa til nýja deild</button>

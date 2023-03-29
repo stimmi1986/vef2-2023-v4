@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { UpdateNameForm } from "../components/Form/UpdateNameForm";
 import { UpdateDescriptionForm } from "../components/Form/UpdateDescriptionForm";
-import { URL } from "../components/departments/Departments";
+import { URL } from "./Departments";
+import DeleteNameForm from "../components/Form/DeleteNameForm";
 
 export function Department() {
-  const { slug } = useParams();
   const [department, setDepartment] = useState({});
   const [state, setState] = useState("loading");
-
+  
+  const { slug } = useParams();
+  
   useEffect(() => {
     async function fetchData() {
       try {
@@ -41,10 +43,18 @@ export function Department() {
   return (
     <>
       <section>
-        <h2>{department.title}</h2>
+        <Link
+          to={{
+            pathname: `${slug}/courses`,
+          }}
+        >
+          {department.title}
+        </Link>
         <UpdateNameForm />
         <p>{department.description}</p>
         <UpdateDescriptionForm />
+        <p>Viltu Eyða Deild?</p>
+        <DeleteNameForm />
       </section>
     </>
   );
