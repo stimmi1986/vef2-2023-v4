@@ -45,7 +45,7 @@ export function Department() {
       <section>
         <Link
           to={{
-            pathname: `${slug}/courses`,
+            pathname: `courses/`,
           }}
         >
           {department.title}
@@ -53,9 +53,10 @@ export function Department() {
         <UpdateNameForm />
         <p>{department.description}</p>
         <UpdateDescriptionForm />
-        <p>Viltu Eyða Deild?</p>
         <DeleteNameForm />
       </section>
+      <div>
+      </div>
     </>
   );
 }

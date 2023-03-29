@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { URL } from "./Departments"
 
 import "./Courses.css";
@@ -73,7 +73,7 @@ export function Courses({ titleName }) {
                 <tr key={index}>
                   <td>{course.courseId}</td>
                   <td>
-                    <a href={course.url}>{course.title}</a>
+                  <Link to={{ pathname: `${course.courseId}`, }}>{course.title}</Link>
                   </td>
                   <td>{course.units}</td>
                   <td>{course.semester}</td>

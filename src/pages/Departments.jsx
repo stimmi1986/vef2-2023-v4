@@ -33,7 +33,7 @@ export function Departments({ titleName }) {
     }
   }
   fetchData();
-  }, [setDepartments]);//
+  }, []);//setDepartments
  
   return (
     <section>
