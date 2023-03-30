@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { URL } from "../../pages/Departments";
 
-export function UpdateDescriptionForm() {
+export function UpdateDescriptionForm(callback) {
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
     const [description, setDescription] = useState('');

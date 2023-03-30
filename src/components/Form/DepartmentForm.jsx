@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { URL } from "../../pages/Departments";
 
-export function DepartmentForm() {
+export function DepartmentForm({callback}) {
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
     const [name, setName] = useState('');
@@ -19,6 +19,9 @@ export function DepartmentForm() {
                 },
                 body: JSON.stringify(body),
             });
+            const responseJson2 = await response.json();
+            console.log(responseJson2)
+            callback()
             if (!response.ok) {
                 if (response.status >= 400 && response.status < 500) {
                     const responseJson = await response.json();

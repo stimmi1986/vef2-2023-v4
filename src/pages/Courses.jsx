@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { URL } from "./Departments"
 
-import "./Courses.css";
+import "./css/style.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ titleName }) {
+export function Courses({ titleName, callback }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
@@ -15,20 +15,23 @@ export function Courses({ titleName }) {
   const [activePage, setActivePage] = useState(1);
 
   const { slug } = useParams();
+  const { params } = useLocation();
+
+  console.log('slug:', params)
+  console.log('title:')
    
-  useEffect(() => {
-    async function fetchData() {
-      setState("loading");
-
-      try {
-        const response = await fetch(
-          `${URL}${slug}/courses/`
-          );
-
+  async function fetchData() {
+    setState("loading");
+    
+    try {
+      const response = await fetch(
+        `${URL}${slug}/courses/`
+        );
+        
         if (!response.ok) {
           throw new Error("not ok");
         }
-
+        
         const json = await response.json();
         const numCourses = json.length;
         setTotalPages(Math.ceil(numCourses / PAGE_SIZE));
@@ -39,9 +42,10 @@ export function Courses({ titleName }) {
         console.log(e);
       }
     }
-
+    
+    useEffect(() => {
     fetchData();
-  }, [ page, slug ]);
+  }, [ page ]);
   
 
   function handlePageChange(newPage) {
@@ -52,7 +56,8 @@ export function Courses({ titleName }) {
   return (
     <section>
       <h3>{titleName}</h3>
-      <h2>{slug}</h2>
+      <h3>{}</h3>
+      <h3>{slug}</h3>
       {state === "empty" && <p>veldu deild hér að ofan</p>}
       {state === "error" && <p>Villa við að sækja námskeið.</p>}
       {state === "loading" && <p>Loading...</p>}

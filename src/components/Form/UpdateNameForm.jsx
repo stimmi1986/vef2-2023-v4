@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import { URL } from "../../pages/Departments";
 
-export function UpdateNameForm() {
+export function UpdateNameForm(callback) {
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
     const [name, setName] = useState('');

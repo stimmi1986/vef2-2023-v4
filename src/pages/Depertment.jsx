@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { UpdateNameForm } from "../components/Form/UpdateNameForm";
 import { UpdateDescriptionForm } from "../components/Form/UpdateDescriptionForm";
+import { DeleteNameForm } from "../components/Form/DeleteNameForm";
 import { URL } from "./Departments";
-import DeleteNameForm from "../components/Form/DeleteNameForm";
 
 export function Department() {
   const [department, setDepartment] = useState({});
@@ -11,26 +11,31 @@ export function Department() {
   
   const { slug } = useParams();
   
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(`${URL}${slug}`);
-
-        if (!response.ok) {
-          throw new Error("not ok");
-        }
-
-        const json = await response.json();
-        setDepartment(json);
-        setState("data");
-      } catch (e) {
-        setState("error");
-        console.log(e);
+  async function fetchData() {
+    try {
+      const response = await fetch(`${URL}${slug}`);
+      
+      if (!response.ok) {
+        throw new Error("not ok");
       }
+      
+      const json = await response.json();
+      setDepartment(json);
+      setState("data");
+    } catch (e) {
+      setState("error");
+      console.log(e);
     }
-
+  }
+  
+  useEffect(() => {
     fetchData();
-  }, [slug]);
+  }, []);
+
+  function tester(){
+    console.log('sækja gögn')
+    fetchData();
+  }
 
   if (state === "error") {
     return <p>Villa við að sækja deild.</p>;
@@ -50,10 +55,10 @@ export function Department() {
         >
           {department.title}
         </Link>
-        <UpdateNameForm />
+        <UpdateNameForm callback={tester} />
         <p>{department.description}</p>
-        <UpdateDescriptionForm />
-        <DeleteNameForm />
+        <UpdateDescriptionForm callback={tester}/>
+        <DeleteNameForm callback={tester}/>
       </section>
       <div>
       </div>

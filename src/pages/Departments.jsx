@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DepartmentForm } from "../components/Form/DepartmentForm";
 
-import "./Departments.css";
+
+import "./css/style.css";
 
 export const URL = process.env.REACT_APP_API_URL;
 
@@ -12,29 +13,34 @@ export function Departments({ titleName }) {
   const [state, setState] = useState("empty");
   const [departments, setDepartments] = useState([{}]);
   
-  useEffect(() => {
   
-    async function fetchData() {
-      setState("loading");
-
-      try {
-        const response = await fetch(URL);
-
-        if (!response.ok) {
-          throw new Error("not ok");
-        }
-
-        const json = await response.json();
-        setDepartments(json);
-        setState("data");
-      } catch (e) {
-        setState("error");
-        console.log(e);
+  async function fetchData() {
+    setState("loading");
+    
+    try {
+      const response = await fetch(URL);
+      
+      if (!response.ok) {
+        throw new Error("not ok");
+      }
+      
+      const json = await response.json();
+      setDepartments(json);
+      setState("data");
+    } catch (e) {
+      setState("error");
+      console.log(e);
     }
   }
+    useEffect(() => {
+      fetchData();
+},[] );//setDepartments
+
+function tester(){
+  console.log('sækja gögn')
   fetchData();
-  }, []);//setDepartments
- 
+}
+
   return (
     <section>
       <h2>{titleName}</h2>
@@ -50,16 +56,18 @@ export function Departments({ titleName }) {
                 <Link
                   to={{
                     pathname: `/departments/${department.slug}/`,
+                    params: { some: "value" },
                   }}
-                >
+                  >
                   {department.title}
+                  {/*console.log(departments)*/}
                 </Link>
                 </li>                
               </div>
             );
           })}
       </ul>
-      <DepartmentForm />
+      <DepartmentForm  callback={tester} />
     </section>
   );
 };
