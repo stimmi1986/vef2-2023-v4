@@ -7,12 +7,12 @@ import { ButtonOnSubmitTitle } from '../components/Button/ButtonOnSubmitTitle'
 import { ButtonOnSubmitDescription } from '../components/Button/ButtonOnSubmitDescription'
 
 
-export function Department() {
-  const [department, setDepartment] = useState({});
+export function Department({department, setDepartment}) {
+  
   const [state, setState] = useState("loading");
-  
   const { slug } = useParams();
-  
+  //const thisdepartment = department
+  console.log(department)
   async function fetchData() {
     try {
       const response = await fetch(`${URL}${slug}`);
@@ -23,6 +23,7 @@ export function Department() {
       
       const json = await response.json();
       setDepartment(json);
+      //setDepartment(json);
       setState("data");
     } catch (e) {
       setState("error");

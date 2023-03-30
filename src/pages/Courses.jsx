@@ -6,7 +6,7 @@ import "./css/style.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ titleName, callback }) {
+export function Courses({ titleName, callback, department, setDepartment }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
