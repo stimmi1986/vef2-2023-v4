@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { useParams } from "react-router";
-import { URL } from "../../pages/Departments";
+import { useNavigate } from "react-router-dom";
+import './Button.css'
 
-export function DeleteCourseForm() {
+export function ButtonOnClick({ callback, method, fetchUrl, buttonName, errorName, nameOfClass}) {
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
     const [deleteCourse, setDeleteCourse] = useState('');
-
-    const {slug, courseId } = useParams();
+    const navigate = useNavigate();
 
     async function deleteCourseId( ) {
         setState('loading')
         try {
-            const response = await fetch(`${URL}${slug}/courses/${courseId}`, {
-                method: 'DELETE',
-                });
+            const response = await fetch(fetchUrl, {
+                method: method, 
+            });
+            callback()
             if (!response.ok) {
                 if (response.status >= 400 && response.status < 500) {
                     setErrors('error')
@@ -27,25 +27,23 @@ export function DeleteCourseForm() {
             setState('error')
         }
     }
-
+    
     const onClickHandler = (e) => {
         e.preventDefault();
-
+        navigate(-1); 
         deleteCourseId(deleteCourse);
     }
-
+    
     const onClickChange = (e) => {
         setDeleteCourse(e.target.value);
     }
 
     return (
         <>
-            <h1>Eyða áfanga</h1>
             <form onSubmit={onClickHandler}>
-                <button id="deleteCourse" value={deleteCourse} onChange={onClickChange}>Eyða áfanga?</button>
+                <button id={nameOfClass} value={deleteCourse} onChange={onClickChange}>{buttonName}</button>
             </form>
-            {state === "empty" && <p>Viltu eyða áfanga?</p>}
-            {state === "error" && <><p>villa við að eyða áfanga</p>
+            {state === "error" && <><p>villa við að eyða {errorName}</p>
             <p>Villur:</p>
             <ul>
                 {errors.map((error, i) => {
@@ -56,9 +54,9 @@ export function DeleteCourseForm() {
             </ul>
             </>}
             {state === "loading" && <p>Loading...</p>}
-            {state === "Success" && <p>Búið að eyða áfanga</p>}
+            {state === "Success" && <p>Búið að eyða {errorName}</p>}
         </>
     )
 }
 
-export default DeleteCourseForm;
+export default ButtonOnClick;

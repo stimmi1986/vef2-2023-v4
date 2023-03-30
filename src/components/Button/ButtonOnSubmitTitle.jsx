@@ -1,63 +1,58 @@
 import { useState } from "react";
-import { URL } from "../../pages/Departments";
+import { useNavigate } from "react-router-dom";
+import './Button.css'
 
-export function DepartmentForm({callback}) {
+export function ButtonOnSubmitTitle({ callback, method, fetchUrl, buttonName, errorName, nameOfClass, inputName, inputOfClass }) {
     const [state, setState] = useState('empty');
     const [errors, setErrors] = useState([]);
-    const [name, setName] = useState('');
+    const [onSubmited, setOnSubmited] = useState('');
+    const navigate = useNavigate();
 
-    async function createDepartment(name, ) {
+    async function onSubmit(title) {
         setState('loading')
         try {
             const body = {
-                title: name
+                title: title,
             }
-            const response = await fetch(URL, {
-                method: 'POST',
+            console.log('Title:')
+            const response = await fetch(fetchUrl, {
+                method: method,
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(body),
+                body: JSON.stringify(body), 
             });
-            const responseJson2 = await response.json();
-            console.log(responseJson2)
             callback()
             if (!response.ok) {
                 if (response.status >= 400 && response.status < 500) {
-                    const responseJson = await response.json();
-                    setState('error')
-                    setErrors(responseJson.errors);
+                    setErrors('error')
                 }
             } else {
                 setState('Success')
             }
+
         } catch (e) {
             setState('error')
         }
     }
-
+    
     const onSubmitHandler = (e) => {
         e.preventDefault();
-
-        createDepartment(name);
+        navigate(-1); 
+        onSubmit(onSubmited);
     }
-
+    
     const onInputChange = (e) => {
-        setName(e.target.value);
+        setOnSubmited(e.target.value);
     }
 
     return (
         <>
-            <h1>Ný deild</h1>
             <form onSubmit={onSubmitHandler}>
-                <div>
-                    <label htmlFor="name">Nafn</label>
-                    <input id="name" type="text" value={name} onChange={onInputChange}/>
-                </div>
-                <button>Búa til nýja deild</button>
+            <input id={inputOfClass} type="text"  onChange={onInputChange} placeholder={inputName} />
+                <button id={nameOfClass} >{buttonName}</button>
             </form>
-            {state === "empty" && <p>engar deildir</p>}
-            {state === "error" && <><p>villa við að búa til deild</p>
+            {state === "error" && <><p>{errorName}</p>
             <p>Villur:</p>
             <ul>
                 {errors.map((error, i) => {
@@ -68,7 +63,9 @@ export function DepartmentForm({callback}) {
             </ul>
             </>}
             {state === "loading" && <p>Loading...</p>}
-            {state === "Success" && <p>Bjó til deild</p>}
+            {state === "Success" && <p>{errorName}</p>}
         </>
     )
 }
+
+export default ButtonOnSubmitTitle;

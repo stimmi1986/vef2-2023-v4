@@ -1,0 +1,50 @@
+button  {
+    padding: 1rem 3rem;
+    margin: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    border: none 1px;
+    border-radius: 50px;
+  }
+
+#sec {
+    background-color: rgb(255, 75, 75);
+
+}
+#sec:hover {
+    background-color: rgb(255, 0, 0);
+
+}
+#prim{
+    background-color: rgb(139, 139, 139);
+}
+#prim:hover{
+    background-color:rgb(195, 195, 195);
+}
+#small{
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: solid 1px;
+    border-radius: 5px;
+}
+
+#Inputsmall{
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+    cursor: pointer;
+    border: solid 1px;
+    border-radius: 5px;
+}
+
+input {
+    padding: 1rem 3rem;
+    margin: 1rem;
+    background-color:rgb(231, 222, 222);
+    font-weight: bold;
+    cursor: pointer;
+    border: none 1px;
+    border-radius: 50px;
+}

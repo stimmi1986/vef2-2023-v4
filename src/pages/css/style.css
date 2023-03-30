@@ -9,6 +9,11 @@ h2 {
   margin: 0px;
 }
 
+p {
+  width: 70%;
+  font-size: 1.5rem;
+}
+
 li {
   text-decoration: none;
   list-style: none;

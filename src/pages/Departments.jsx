@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { DepartmentForm } from "../components/Form/DepartmentForm";
+import { ButtonOnSubmitTitle } from '../components/Button/ButtonOnSubmitTitle';
 
 
 import "./css/style.css";
@@ -67,7 +67,7 @@ function tester(){
             );
           })}
       </ul>
-      <DepartmentForm  callback={tester} />
+      <ButtonOnSubmitTitle callback={tester} method={'POST'} fetchUrl={`${URL}`}  buttonName={'búa til deild'} inputName={'Búðu til Deild'} errorName={'deild'} nameOfClass={'prim'}/>
     </section>
   );
 };

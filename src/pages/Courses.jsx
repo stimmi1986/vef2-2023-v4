@@ -55,9 +55,9 @@ export function Courses({ titleName, callback }) {
 
   return (
     <section>
-      <h3>{titleName}</h3>
-      <h3>{}</h3>
+      <h2>{titleName}</h2>
       <h3>{slug}</h3>
+      <p>{slug}</p>
       {state === "empty" && <p>veldu deild hér að ofan</p>}
       {state === "error" && <p>Villa við að sækja námskeið.</p>}
       {state === "loading" && <p>Loading...</p>}

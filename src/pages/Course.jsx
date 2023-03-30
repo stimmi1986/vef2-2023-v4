@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import DeleteCourseForm from "../components/Form/DeleteCourseForm";
 import { URL } from "./Departments"
 
-export function Course({ titleName }) {
+import ButtonCourseId from "../components/Button/ButtonCourseId";
+import ButtonOnSubmitTitle from "../components/Button/ButtonOnSubmitTitle";
+import ButtonUnits from "../components/Button/BottonUnits";
+import ButtonSemester from "../components/Button/ButtonSemester";
+import ButtonLevel from "../components/Button/ButtonLevel"
+import ButtonOnClick from "../components/Button/ButtonOnClick";
+
+export function Course() {
     const [state, setState] = useState("empty");
     const [courses, setCourses] = useState([]);
 
     const { slug, courseId } = useParams();
     const encodedCourseId = encodeURIComponent(courseId);
 
-    useEffect(() => {
-        async function fetchData() {
-            setState("loading");
-
-            try {
-                const response = await fetch(
-                    `${URL}${slug}/courses/${encodedCourseId}`
+    async function fetchData() {
+        setState("loading");
+        
+        try {
+            const response = await fetch(
+                `${URL}${slug}/courses/${encodedCourseId}`
                 );
                 console.log('Url:>> ', `${URL}${slug}/courses/${encodedCourseId}`)
-
+                
                 if (!response.ok) {
                     throw new Error("not ok");
                 }
@@ -31,30 +36,34 @@ export function Course({ titleName }) {
                 console.log(e);
             }
         }
-
+        
+        useEffect(() => {
         fetchData();
     }, [ slug, encodedCourseId ]);
 
+    function tester(){
+        console.log('sækja gögn')
+        fetchData();
+    }
+
     return (
         <section>
-            <h2>{slug}</h2><br />
-            <h2>{titleName}</h2>
-            <h3>{courses.title}</h3>
-            <h3><a href={`${courses.url}`}>{courses.courseId}</a></h3>
+            <p>Deild:<h2>{slug}</h2></p>
+            <h2><a href={`${courses.url}`}>{courses.title}</a></h2>
             {state === "error" && <p>Villa við að sækja áfanga.</p>}
             {state === "loading" && <p>Loading...</p>}
             {state === "data" && (
                 <div>
                     <ul key={courses.index}>
-                        <li><b>Númer: </b> {courses.courseId}</li>
-                        <li><b>Heiti: </b> {courses.title}</li>
-                        <li><b>Einingar: </b> {courses.units}</li>
-                        <li><b>Kennslumisseri: </b> {courses.semester}</li>
-                        <li><b>Námsstig: </b> {courses.level}</li>
+                        <li><b>Númer: </b> {courses.courseId}<ButtonCourseId callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}/courses/${encodedCourseId}`} buttonName={'breyta Númar'} nameOfClass={'small'} inputOfClass={'Inputsmall'} inputName={'Breyta Númeri'} /></li>
+                        <li><b>Heiti: </b> {courses.title}<ButtonOnSubmitTitle callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}/courses/${encodedCourseId}`} buttonName={'breyta Heiti'} nameOfClass={'small'} inputOfClass={'Inputsmall'} inputName={'Breyta Heiti'} /></li>
+                        <li><b>Einingar: </b> {courses.units}<ButtonUnits callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}/courses/${encodedCourseId}`} buttonName={'breyta einingum'} nameOfClass={'small'} inputOfClass={'Inputsmall'} inputName={'Engöngu Tölustafir'} /></li>
+                        <li><b>Kennslumisseri: </b> {courses.semester}<ButtonSemester callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}/courses/${encodedCourseId}`} buttonName={'breyta Kennslumisseri'} nameOfClass={'Inputsmall'} inputOfClass={'small'} inputName={'Breyta Kennslumisseri'} /></li>
+                        <li><b>Námsstig: </b> {courses.level}<ButtonLevel callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}/courses/${encodedCourseId}`} buttonName={'breyta Námsstigi'}  nameOfClass={'small'} inputOfClass={'Inputsmall'} inputName={'Breyta Námsstigi'} /></li>
                     </ul>    
                 </div>
             )}
-            <DeleteCourseForm />
+            <ButtonOnClick callback={tester} method={'DELETE'} fetchUrl={`${URL}${slug}/courses/${encodedCourseId}`} buttonName={'viltu eyða Áfanga'} errorName={'Tókst ekki að eyða áfanga'} nameOfClass={'sec'} />
         </section>
     );
 };

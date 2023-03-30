@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { UpdateNameForm } from "../components/Form/UpdateNameForm";
-import { UpdateDescriptionForm } from "../components/Form/UpdateDescriptionForm";
-import { DeleteNameForm } from "../components/Form/DeleteNameForm";
 import { URL } from "./Departments";
+
+import { ButtonOnClick } from "../components/Button/ButtonOnClick"
+import { ButtonOnSubmitTitle } from '../components/Button/ButtonOnSubmitTitle'
+import { ButtonOnSubmitDescription } from '../components/Button/ButtonOnSubmitDescription'
+
 
 export function Department() {
   const [department, setDepartment] = useState({});
@@ -53,12 +55,12 @@ export function Department() {
             pathname: `courses/`,
           }}
         >
-          {department.title}
+          <h2>{department.title}</h2>
         </Link>
-        <UpdateNameForm callback={tester} />
-        <p>{department.description}</p>
-        <UpdateDescriptionForm callback={tester}/>
-        <DeleteNameForm callback={tester}/>
+        <p>{department.description}</p><br />
+        <ButtonOnSubmitTitle callback={tester} method={'PATCH'}  fetchUrl={`${URL}${slug}`}  buttonName={'breyta nafn á deild'} errorName={'villa við að breyta nafni á deild'} nameOfClass={'prim'} inputName={'Breyta nafn á deild'} />
+        <ButtonOnSubmitDescription callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}`}  buttonName={'breyta upplýsingum um deild '} errorName={'villa við að breyta upplýsingum'} nameOfClass={'prim'} inputName={'Breyta upplýsingum um deild'} />
+        <ButtonOnClick  callback={tester} method={'DELETE'} fetchUrl={`${URL}${slug}`} buttonName={'viltu eyða Deild'} errorName={'deild'} nameOfClass={'sec'}  />
       </section>
       <div>
       </div>

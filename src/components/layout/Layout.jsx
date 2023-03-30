@@ -1,15 +1,27 @@
-import React from "react";
-import { Courses } from "../courses/Courses";
-import { Departments } from "../departments/Departments";
+import './Layout.css';
 
-export function Layout(department) {
-
+export function Layout({ titleName, children, footer }) {
   return (
-    <>
-      <Departments titleName='Deildir' />
-      <Courses titleName='Námskeið' title={department.title} description={department.description} />
-    </>
+    <div className='layout'>
+      <header className='layout__header'>
+        <nav class="navbar">
+          <h1>{titleName}</h1>
+          <ul class="nav-list">
+            
+            <li class="nav-item">
+              <a class="nav-link" href='/'>Deildir</a>
+            </li>
+            
+          </ul>
+        </nav>
+        
+      </header>
+      <main className='layout__main'>
+        {children}
+      </main>
+      <footer className='layout__footer'>
+        {footer}
+      </footer>
+    </div>
   )
-};
-
-export default Layout;
+}
