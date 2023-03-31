@@ -68,7 +68,15 @@ function tester(){
             );
           })}
       </ul>
-      <ButtonOnSubmitTitle callback={tester} method={'POST'} fetchUrl={`${URL}`}  buttonName={'búa til deild'} inputName={'Búðu til Deild'} nameOfClass={'prim'}/>
+      <button>styrmir</button>
+      <ButtonOnSubmitTitle 
+        callback={tester} 
+        method={'POST'} 
+        fetchUrl={`${URL}`}  
+        buttonName={'búa til deild'} 
+        inputName={'Búðu til Deild'} 
+        nameOfClass={'prim'}
+      />
     </section>
   );
 };

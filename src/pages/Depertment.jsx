@@ -5,6 +5,8 @@ import { URL } from "./Departments";
 import { ButtonOnClick } from "../components/Button/ButtonOnClick"
 import { ButtonOnSubmitTitle } from '../components/Button/ButtonOnSubmitTitle'
 import { ButtonOnSubmitDescription } from '../components/Button/ButtonOnSubmitDescription'
+import { BackButton } from '../components/Button/BackButton'
+
 
 
 export function Department({deild}) {
@@ -56,6 +58,7 @@ export function Department({deild}) {
         >
           <h2>{department.title}</h2>
         </Link>
+        
         <p>{department.description}</p><br />
         <ButtonOnSubmitTitle 
           callback={tester} 
@@ -85,6 +88,7 @@ export function Department({deild}) {
         />
       </section>
       <div>
+      <BackButton nameOfClass={'thrd'} />
       </div>
     </>
   );

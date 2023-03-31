@@ -5,6 +5,7 @@ import { Departments } from "./pages/Departments"
 import { Department } from "./pages/Depertment"
 import { Courses } from './pages/Courses';
 import { Course } from './pages/Course';
+import { MakeCourse } from './pages/MakeCourse';
 
 import './App.css';
 import { Layout } from "./components/layout/Layout";
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/departments/:slug" element={<Department titleName='Deild' deild={deild} />}  />
           <Route exact path="/departments/:slug/courses" element={<Courses titleName='Áfangar' deild={deild} />}  />
           <Route exact path="/departments/:slug/courses/:courseId" element={<Course titleName='Áfangi' deild={deild} setDeild={setDeild} />}  />
+          <Route exact path="/departments/:slug/courses/mkcourse" element={<MakeCourse titleName='Búa til áfanga' deild={deild} setDeild={setDeild} />}  />
         </Routes>
     </Layout>
   );

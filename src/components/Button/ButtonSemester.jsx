@@ -8,8 +8,8 @@ export function ButtonSemester({
   buttonName,
   errorName,
   nameOfClass,
-  selectName,  // use selectName instead of inputOfClass
-  selectOptions,  // use selectOptions instead of inputName
+  selectName,
+  selectOptions,
 }) {
   const [state, setState] = useState("empty");
   const [errors, setErrors] = useState([]);
@@ -21,7 +21,7 @@ export function ButtonSemester({
       const body = {
         semester: option,
       };
-      console.log("Option:", option);
+      //console.log("Option:", option);
       const response = await fetch(fetchUrl, {
         method: method,
         headers: {

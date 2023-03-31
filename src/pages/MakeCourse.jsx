@@ -10,7 +10,7 @@ import ButtonLevel from "../components/Button/ButtonLevel"
 import ButtonOnClick from "../components/Button/ButtonOnClick";
 import BackButton from "../components/Button/BackButton";
 
-export function Course(deild) {
+export function MakeCourse(deild) {
     const [state, setState] = useState("empty");
     const [courses, setCourses] = useState([]);
     const { slug, courseId } = useParams();
@@ -130,4 +130,4 @@ export function Course(deild) {
     );
 };
 
-export default Course;
+export default MakeCourse;

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { URL } from "./Departments"
 
+import BackButton from "../components/Button/BackButton";
+
 import "./css/style.css";
 
 const PAGE_SIZE = 10;
@@ -51,10 +53,11 @@ export function Courses({ titleName, deild }) {
   }
 
   return (
+    <>
     <section>
       <h2>{deild.title}</h2>
       <p>{deild.description}</p>
-      <p><b>{titleName}</b></p>
+      <p><b>{titleName}</b><a href={`/courses/mkcourse`}><button id="thrd" >Búatil Áfanga</button></a></p>
       {state === "empty" && <p>veldu deild hér að ofan</p>}
       {state === "error" && <p>Villa við að sækja námskeið.</p>}
       {state === "loading" && <p>Loading...</p>}
@@ -125,6 +128,10 @@ export function Courses({ titleName, deild }) {
         </>
       )}
     </section>
+    <div>
+    <BackButton nameOfClass={'thrd'} />
+    </div>
+    </>
   );
 }
 
