@@ -1,20 +1,18 @@
 import './Layout.css';
 
 export function Layout({ titleName, children, footer }) {
+
   return (
     <div className='layout'>
       <header className='layout__header'>
-        <nav class="navbar">
+        <nav className="navbar">
           <h1>{titleName}</h1>
-          <ul class="nav-list">
-            
-            <li class="nav-item">
-              <a class="nav-link" href='/'>Deildir</a>
+          <ul className="nav-list">
+            <li className="nav-item">
+              <a className="nav-link" href='/'>Deildir</a>
             </li>
-            
           </ul>
         </nav>
-        
       </header>
       <main className='layout__main'>
         {children}

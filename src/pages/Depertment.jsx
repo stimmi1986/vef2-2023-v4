@@ -7,12 +7,11 @@ import { ButtonOnSubmitTitle } from '../components/Button/ButtonOnSubmitTitle'
 import { ButtonOnSubmitDescription } from '../components/Button/ButtonOnSubmitDescription'
 
 
-export function Department({department, setDepartment}) {
-  
+export function Department({deild}) {
   const [state, setState] = useState("loading");
   const { slug } = useParams();
-  //const thisdepartment = department
-  console.log(department)
+  const [department, setDepartment] = useState([]);
+  console.log('Deild:',deild)
   async function fetchData() {
     try {
       const response = await fetch(`${URL}${slug}`);
@@ -23,7 +22,6 @@ export function Department({department, setDepartment}) {
       
       const json = await response.json();
       setDepartment(json);
-      //setDepartment(json);
       setState("data");
     } catch (e) {
       setState("error");
@@ -59,9 +57,32 @@ export function Department({department, setDepartment}) {
           <h2>{department.title}</h2>
         </Link>
         <p>{department.description}</p><br />
-        <ButtonOnSubmitTitle callback={tester} method={'PATCH'}  fetchUrl={`${URL}${slug}`}  buttonName={'breyta nafn á deild'} errorName={'villa við að breyta nafni á deild'} nameOfClass={'prim'} inputName={'Breyta nafn á deild'} />
-        <ButtonOnSubmitDescription callback={tester} method={'PATCH'} fetchUrl={`${URL}${slug}`}  buttonName={'breyta upplýsingum um deild '} errorName={'villa við að breyta upplýsingum'} nameOfClass={'prim'} inputName={'Breyta upplýsingum um deild'} />
-        <ButtonOnClick  callback={tester} method={'DELETE'} fetchUrl={`${URL}${slug}`} buttonName={'viltu eyða Deild'} errorName={'deild'} nameOfClass={'sec'}  />
+        <ButtonOnSubmitTitle 
+          callback={tester} 
+          method={'PATCH'}  
+          fetchUrl={`${URL}${slug}`}  
+          buttonName={'breyta nafn á deild'} 
+          errorName={'villa við að breyta nafni á deild'} 
+          nameOfClass={'prim'} 
+          inputName={'Breyta nafn á deild'} 
+        />
+        <ButtonOnSubmitDescription 
+          callback={tester} 
+          method={'PATCH'} 
+          fetchUrl={`${URL}${slug}`}  
+          buttonName={'breyta upplýsingum um deild '} 
+          errorName={'villa við að breyta upplýsingum'} 
+          nameOfClass={'prim'} 
+          inputName={'Breyta upplýsingum um deild'} 
+        />
+        <ButtonOnClick  
+          callback={tester} 
+          method={'DELETE'} 
+          fetchUrl={`${URL}${slug}`} 
+          buttonName={'viltu eyða Deild'} 
+          errorName={'deild'} 
+          nameOfClass={'sec'}  
+        />
       </section>
       <div>
       </div>

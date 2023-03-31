@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link, useLocation } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { URL } from "./Departments"
 
 import "./css/style.css";
 
 const PAGE_SIZE = 10;
 
-export function Courses({ titleName, callback, department, setDepartment }) {
+export function Courses({ titleName, deild }) {
   const [state, setState] = useState("empty");
   const [courses, setCourses] = useState([]);
 
@@ -15,10 +15,7 @@ export function Courses({ titleName, callback, department, setDepartment }) {
   const [activePage, setActivePage] = useState(1);
 
   const { slug } = useParams();
-  const { params } = useLocation();
 
-  console.log('slug:', params)
-  console.log('title:')
    
   async function fetchData() {
     setState("loading");
@@ -55,9 +52,9 @@ export function Courses({ titleName, callback, department, setDepartment }) {
 
   return (
     <section>
-      <h2>{titleName}</h2>
-      <h3>{slug}</h3>
-      <p>{slug}</p>
+      <h2>{deild.title}</h2>
+      <p>{deild.description}</p>
+      <p><b>{titleName}</b></p>
       {state === "empty" && <p>veldu deild hér að ofan</p>}
       {state === "error" && <p>Villa við að sækja námskeið.</p>}
       {state === "loading" && <p>Loading...</p>}

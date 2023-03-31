@@ -9,17 +9,17 @@ import { Course } from './pages/Course';
 import './App.css';
 import { Layout } from "./components/layout/Layout";
 
-function App({titleName}) {
-  const [department, setDepartment] = useState([])
+function App() {
+  const [deild, setDeild] = useState([])
+  const [deildir, setDeildir] = useState([])
   return (
     <Layout titleName="Kennsluskrá">
         <Routes>
           <Route exact path="/*" element={<NotFound titleName='Síða fannst ekki :( ' />}  />
-          <Route exact path="/" element={<Departments titleName='Deildir' />}  />
-          <Route exact path="/departments/:slug" element={<Department titleName='Deild' department={department} setDepartment={setDepartment} />}  />
-          <Route exact path="/departments/:slug/courses" element={<Courses titleName='Áfangar' department={department} setDepartment={setDepartment} />}  />
-
-          <Route exact path="/departments/:slug/courses/:courseId" element={<Course titleName='Áfangi' />}  />
+          <Route exact path="/" element={<Departments titleName='Deildir' deildir={deildir} setDeildir={setDeildir} deild={deild} setDeild={setDeild} />}  />
+          <Route exact path="/departments/:slug" element={<Department titleName='Deild' deild={deild} />}  />
+          <Route exact path="/departments/:slug/courses" element={<Courses titleName='Áfangar' deild={deild} />}  />
+          <Route exact path="/departments/:slug/courses/:courseId" element={<Course titleName='Áfangi' deild={deild} setDeild={setDeild} />}  />
         </Routes>
     </Layout>
   );

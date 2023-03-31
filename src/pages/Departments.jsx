@@ -7,12 +7,13 @@ import "./css/style.css";
 
 export const URL = process.env.REACT_APP_API_URL;
 
-export function Departments({ titleName }) {
+export function Departments({ titleName, setDeild, deildir, setDeildir}) {
 
   // type State = 'empty' | 'data' | 'error' | 'loading' GOLDEN RULE Læra
   const [state, setState] = useState("empty");
-  const [departments, setDepartments] = useState([{}]);
+  //const [departments, setDepartments] = useState([{}]);
   
+  const departments = deildir
   
   async function fetchData() {
     setState("loading");
@@ -25,7 +26,7 @@ export function Departments({ titleName }) {
       }
       
       const json = await response.json();
-      setDepartments(json);
+      setDeildir(json);
       setState("data");
     } catch (e) {
       setState("error");
@@ -52,8 +53,8 @@ function tester(){
           departments.map((department, i) => {
             return (
               <div key={i}>
-                <li>
-                <Link
+                <li onClick={ () => setDeild(department)}>
+                <Link 
                   to={{
                     pathname: `/departments/${department.slug}/`,
                     params: { some: "value" },
@@ -67,7 +68,7 @@ function tester(){
             );
           })}
       </ul>
-      <ButtonOnSubmitTitle callback={tester} method={'POST'} fetchUrl={`${URL}`}  buttonName={'búa til deild'} inputName={'Búðu til Deild'} errorName={'deild'} nameOfClass={'prim'}/>
+      <ButtonOnSubmitTitle callback={tester} method={'POST'} fetchUrl={`${URL}`}  buttonName={'búa til deild'} inputName={'Búðu til Deild'} nameOfClass={'prim'}/>
     </section>
   );
 };
