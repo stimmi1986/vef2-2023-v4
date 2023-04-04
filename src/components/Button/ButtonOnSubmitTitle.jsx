@@ -38,7 +38,7 @@ export function ButtonOnSubmitTitle({ callback, method, fetchUrl, buttonName, er
     
     const onSubmitHandler = (e) => {
         e.preventDefault();
-        navigate(-1); 
+        navigate(0); 
         onSubmit(onSubmited);
     }
     
